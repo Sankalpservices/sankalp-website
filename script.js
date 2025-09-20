@@ -12,7 +12,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
     submitButton.disabled = true;
     
     try {
-        const response = await fetch('94cc42e9-08cd-4cad-b720-e014708c5881/submit', {
+        const response = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             body: formData
         });
@@ -152,11 +152,17 @@ document.addEventListener('DOMContentLoaded', function() {
         card.style.animationDelay = `${index * 0.1}s`;
     });
     
-    // Preload critical resources
-    const criticalImages = document.querySelectorAll('img[src]');
-    criticalImages.forEach(img => {
-        const imageLoader = new Image();
-        imageLoader.src = img.src;
+    // Logo error handling
+    const logoImages = document.querySelectorAll('.logo-image, .hero-logo-img, .about-logo, .footer-logo-img');
+    logoImages.forEach(img => {
+        img.addEventListener('load', function() {
+            this.style.opacity = '1';
+        });
+        
+        img.addEventListener('error', function() {
+            console.log('Logo failed to load from Google Drive');
+            // Fallback is handled by onerror attribute in HTML
+        });
     });
 });
 
