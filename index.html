@@ -337,5 +337,66 @@
     </footer>
 
     <script src="script.js"></script>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMACS - Sankalp Management & Consultant Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- All your existing HTML content remains the same -->
+    <!-- Header, Home, About, Services, Profile, Contact, Footer sections -->
+    <!-- ... (keep all existing content) ... -->
+
+    <!-- Add this Chatbot HTML before closing </body> tag -->
+    <div id="chatbot-container">
+        <div id="chatbot-toggle">
+            <div class="chatbot-icon">
+                💬
+            </div>
+        </div>
+        
+        <div id="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <img src="https://drive.google.com/uc?export=view&id=1xoX5K6-uz1StxcjtH9bLv0UD2ltNpUor" alt="SMACS" class="chatbot-logo" onerror="this.style.display='none';">
+                    <div>
+                        <h4>SMACS Assistant</h4>
+                        <span class="online-status">Online</span>
+                    </div>
+                </div>
+                <button id="chatbot-close">✕</button>
+            </div>
+            
+            <div id="chatbot-messages">
+                <div class="bot-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hello! I'm SMACS Assistant. How can I help you with society management services today?</p>
+                        <div class="quick-actions">
+                            <button class="quick-btn" onclick="sendQuickMessage('services')">Our Services</button>
+                            <button class="quick-btn" onclick="sendQuickMessage('pricing')">Pricing Info</button>
+                            <button class="quick-btn" onclick="sendQuickMessage('contact')">Contact Us</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" placeholder="Type your message..." maxlength="200">
+                <button id="chatbot-send">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
 </body>
 </html>
