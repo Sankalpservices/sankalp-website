@@ -376,11 +376,11 @@
             </div>
         </div>
 
-        <div class="consultation-cta">
-            <h3>Need Personalized Legal Advice?</h3>
-            <p>For complex legal matters or specific consultation, our experts are here to help.</p>
-            <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView()">Schedule Consultation</button>
-        </div>
+        <div class="consultation-tabs">
+    <button class="tab-button active" onclick="switchTab('search')">🔍 AI Legal Search</button>
+    <button class="tab-button" onclick="switchTab('browse')">📚 Browse Documents</button>
+    <button class="tab-button" onclick="switchTab('faq')">❓ Common FAQs</button>
+</div>
     </div>
 </section>
     <section id="contact" class="contact-section">
@@ -501,11 +501,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- All your existing HTML content remains the same -->
-    <!-- Header, Home, About, Services, Profile, Contact, Footer sections -->
-    <!-- ... (keep all existing content) ... -->
 
-    <!-- Add this Chatbot HTML before closing </body> tag -->
     <div id="chatbot-container">
         <div id="chatbot-toggle">
             <div class="chatbot-icon">
