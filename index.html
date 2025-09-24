@@ -230,6 +230,157 @@
         </div>
     </section>
 
+    <section id="consultation" class="consultation-section">
+    <div class="container">
+        <h2>Legal Consultation & Document Search</h2>
+        <p class="consultation-intro">Get instant answers to your society management questions with our AI-powered legal search engine. Search through Maharashtra Cooperative Societies Act 1960 and Model Bylaws.</p>
+        
+        <div class="consultation-tabs">
+            <button class="tab-button active" onclick="switchTab('search')">🔍 AI Legal Search</button>
+            <button class="tab-button" onclick="switchTab('browse')">📚 Browse Documents</button>
+            <button class="tab-button" onclick="switchTab('faq')">❓ Common FAQs</button>
+        </div>
+
+        <!-- AI Search Tab -->
+        <div id="search-tab" class="tab-content active">
+            <div class="search-interface">
+                <div class="search-header">
+                    <h3>Ask Our AI Legal Assistant</h3>
+                    <p>Ask any question about society management, bylaws, or legal compliance. Our AI will search through relevant sections and provide accurate answers.</p>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="legal-search-input" placeholder="e.g., What are the voting rights of members? How to conduct AGM? Committee formation rules?" maxlength="300">
+                    <button id="legal-search-btn">Search</button>
+                </div>
+                
+                <div class="search-suggestions">
+                    <h4>Popular Questions:</h4>
+                    <div class="suggestion-chips">
+                        <span class="suggestion-chip" onclick="searchLegal('What are the quorum requirements for society meetings?')">Quorum Requirements</span>
+                        <span class="suggestion-chip" onclick="searchLegal('How to remove a committee member?')">Remove Committee Member</span>
+                        <span class="suggestion-chip" onclick="searchLegal('What are the audit requirements for societies?')">Audit Requirements</span>
+                        <span class="suggestion-chip" onclick="searchLegal('Transfer of membership rules')">Membership Transfer</span>
+                        <span class="suggestion-chip" onclick="searchLegal('What are the reserve fund requirements?')">Reserve Fund Rules</span>
+                        <span class="suggestion-chip" onclick="searchLegal('Committee election procedures')">Election Procedures</span>
+                    </div>
+                </div>
+                
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+
+        <!-- Browse Documents Tab -->
+        <div id="browse-tab" class="tab-content">
+            <div class="document-browser">
+                <h3>Browse Legal Documents</h3>
+                <div class="document-categories">
+                    <div class="doc-category">
+                        <h4>📜 Maharashtra Cooperative Societies Act 1960</h4>
+                        <div class="chapter-list">
+                            <button class="chapter-btn" onclick="showChapter('registration')">Chapter II - Registration</button>
+                            <button class="chapter-btn" onclick="showChapter('members')">Chapter III - Members Rights & Liabilities</button>
+                            <button class="chapter-btn" onclick="showChapter('management')">Chapter VII - Management of Societies</button>
+                            <button class="chapter-btn" onclick="showChapter('audit')">Chapter VIII - Audit & Inspection</button>
+                            <button class="chapter-btn" onclick="showChapter('disputes')">Chapter IX - Settlement of Disputes</button>
+                            <button class="chapter-btn" onclick="showChapter('housing')">Chapter XIII-B - Housing Societies</button>
+                        </div>
+                    </div>
+                    
+                    <div class="doc-category">
+                        <h4>📋 Model Bylaws</h4>
+                        <div class="chapter-list">
+                            <button class="chapter-btn" onclick="showBylaw('membership')">Membership Rules</button>
+                            <button class="chapter-btn" onclick="showBylaw('committee')">Committee Formation</button>
+                            <button class="chapter-btn" onclick="showBylaw('meetings')">Meetings & Procedures</button>
+                            <button class="chapter-btn" onclick="showBylaw('financial')">Financial Management</button>
+                            <button class="chapter-btn" onclick="showBylaw('transfer')">Property Transfer</button>
+                            <button class="chapter-btn" onclick="showBylaw('misc')">Miscellaneous Provisions</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="document-content" class="document-content">
+                    <p>Select a chapter or bylaw section to view its contents.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Tab -->
+        <div id="faq-tab" class="tab-content">
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What is the minimum number of members required to form a housing society?</h4>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>According to Section 6 of MCS Act 1960, a minimum of 10 adult persons is required to form a cooperative housing society. These persons must be competent to contract under the Indian Contract Act.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>How often should Annual General Meetings be conducted?</h4>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>As per Section 75 of MCS Act, every society must hold an Annual General Meeting within 6 months of the close of the cooperative year. The meeting must be held within the state and proper notice must be given to all members.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What are the audit requirements for cooperative societies?</h4>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Under Section 81, every society must have its accounts audited annually by qualified auditors. The audit should be completed within 6 months of the cooperative year end, and the audit report must be presented at the AGM.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>Can a committee member be removed during their tenure?</h4>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, according to Section 73-ID, a no-confidence motion can be passed against officers. Also, under Section 78A, the Registrar has powers to remove committee members for misconduct or incapacity.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What percentage of shares can a single member hold?</h4>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>As per Section 28, no member can hold more than 1/5th (20%) of the total share capital of the society, or shares worth more than Rs. 1,000, whichever is higher, unless specifically allowed by the bylaws.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What is the reserve fund requirement for societies?</h4>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Under Section 66, every society must transfer at least 25% of its net profits to the reserve fund until it equals the share capital or such amount as prescribed by the Registrar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="consultation-cta">
+            <h3>Need Personalized Legal Advice?</h3>
+            <p>For complex legal matters or specific consultation, our experts are here to help.</p>
+            <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView()">Schedule Consultation</button>
+        </div>
+    </div>
+</section>
     <section id="contact" class="contact-section">
         <div class="container">
             <h2>Contact Us</h2>
