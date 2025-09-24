@@ -183,7 +183,6 @@ if (mapIframe) {
         `;
     });
 }
-
 // Chatbot Functionality
 const chatbotToggle = document.getElementById('chatbot-toggle');
 const chatbotWindow = document.getElementById('chatbot-window');
