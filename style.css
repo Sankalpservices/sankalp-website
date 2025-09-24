@@ -896,7 +896,6 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
 }
-/* ... All your existing CSS remains the same ... */
 
 /* Chatbot Styles */
 #chatbot-container {
