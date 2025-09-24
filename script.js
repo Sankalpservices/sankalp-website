@@ -489,3 +489,340 @@ function initializeChatbot() {
     
     console.log('Chatbot initialized successfully');
 }
+// Legal Consultation Functionality
+const legalKnowledgeBase = {
+    // MCS Act Sections
+    'quorum': {
+        title: 'Quorum Requirements for Society Meetings',
+        source: 'MCS Act 1960 - Section 75',
+        content: 'For Annual General Meetings, the quorum shall be 1/10th of total members or 10 members, whichever is higher. For Special General Meetings, quorum is 1/5th of total members or 10 members, whichever is higher. If quorum is not present, the meeting shall be adjourned to the same day next week.',
+        section: 'Section 75 - Annual General Body Meeting'
+    },
+    'committee removal': {
+        title: 'Removal of Committee Members',
+        source: 'MCS Act 1960 - Sections 73-ID & 78A',
+        content: 'Committee members can be removed through: 1) No-confidence motion passed by 2/3rd majority of members present (Section 73-ID), 2) Registrar\'s power to remove for misconduct, incapacity, or acting against society interests (Section 78A), 3) Automatic disqualification under Section 73CA for various grounds.',
+        section: 'Sections 73-ID, 78A, 73CA'
+    },
+    'audit': {
+        title: 'Audit Requirements for Cooperative Societies',
+        source: 'MCS Act 1960 - Section 81',
+        content: 'Every society must conduct annual audit by qualified auditors appointed by the Registrar or approved auditors. Audit must be completed within 6 months of cooperative year end. Audit report must be presented at AGM. Society must maintain proper books of accounts as prescribed.',
+        section: 'Section 81 - Audit'
+    },
+    'membership transfer': {
+        title: 'Transfer of Membership Rules',
+        source: 'MCS Act 1960 - Sections 29 & 154B-12',
+        content: 'Transfer of shares/membership requires: 1) Written application to committee, 2) Committee approval within 30 days, 3) Transferee must be eligible for membership, 4) All dues cleared, 5) Transfer deed executed, 6) Entry in member register. For housing societies, additional consent of 2/3rd committee members required.',
+        section: 'Sections 29, 154B-12'
+    },
+    'reserve fund': {
+        title: 'Reserve Fund Requirements',
+        source: 'MCS Act 1960 - Section 66',
+        content: 'Every society must transfer minimum 25% of annual net profits to Reserve Fund until it equals the share capital or amount prescribed by Registrar. Reserve Fund can only be used for: 1) Meeting losses, 2) Covering depreciation, 3) With Registrar\'s permission for specific purposes.',
+        section: 'Section 66 - Reserve Fund'
+    },
+    'election': {
+        title: 'Committee Election Procedures',
+        source: 'MCS Act 1960 - Sections 73AAA & 73CB',
+        content: 'Elections conducted by State Cooperative Election Authority. Committee term is 5 years. Elections must be completed before expiry. Nominations, scrutiny, polling conducted as per rules. Reserved seats for SC/ST/OBC and women as applicable. Election disputes decided by Cooperative Courts.',
+        section: 'Sections 73AAA, 73CB'
+    }
+};
+
+// Tab switching functionality
+function switchTab(tabName) {
+    // Remove active class from all tabs and buttons
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Add active class to selected tab and button
+    document.getElementById(tabName + '-tab').classList.add('active');
+    event.target.classList.add('active');
+}
+
+// Legal search functionality
+function searchLegal(query) {
+    const searchInput = document.getElementById('legal-search-input');
+    const searchResults = document.getElementById('search-results');
+    
+    if (query) {
+        searchInput.value = query;
+    } else {
+        query = searchInput.value.trim();
+    }
+    
+    if (!query) return;
+    
+    // Show loading
+    searchResults.innerHTML = `
+        <div class="search-loading">
+            <div class="spinner"></div>
+            <p>Searching through legal documents...</p>
+        </div>
+    `;
+    
+    // Simulate AI search delay
+    setTimeout(() => {
+        const results = performLegalSearch(query);
+        displaySearchResults(results);
+    }, 1500);
+}
+
+function performLegalSearch(query) {
+    const queryLower = query.toLowerCase();
+    const results = [];
+    
+    // Search through knowledge base
+    for (const [key, value] of Object.entries(legalKnowledgeBase)) {
+        if (queryLower.includes(key) || 
+            value.title.toLowerCase().includes(queryLower) || 
+            value.content.toLowerCase().includes(queryLower)) {
+            results.push(value);
+        }
+    }
+    
+    // If no specific matches, provide general guidance
+    if (results.length === 0) {
+        results.push({
+            title: 'General Legal Guidance Required',
+            source: 'SMACS Legal Consultation',
+            content: `Your query "${query}" requires specific legal analysis. Our experts can provide detailed guidance on this matter. Common areas we help with include committee matters, member disputes, compliance issues, audit requirements, and society governance.`,
+            section: 'Expert Consultation Recommended'
+        });
+    }
+    
+    return results;
+}
+
+function displaySearchResults(results) {
+    const searchResults = document.getElementById('search-results');
+    
+    if (results.length === 0) {
+        searchResults.innerHTML = `
+            <div class="search-result-item">
+                <h4>No Results Found</h4>
+                <p>Try rephrasing your question or contact our experts for personalized assistance.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let resultsHTML = '<h3>Search Results:</h3>';
+    
+    results.forEach(result => {
+        resultsHTML += `
+            <div class="search-result-item">
+                <div class="source-tag">${result.source}</div>
+                <h4>${result.title}</h4>
+                <div class="section-reference">${result.section}</div>
+                <p>${result.content}</p>
+            </div>
+        `;
+    });
+    
+    resultsHTML += `
+        <div class="search-result-item" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-left-color: #2196f3;">
+            <h4>Need More Detailed Guidance?</h4>
+            <p>For complex legal matters or specific consultation, our experienced team at SMACS can provide personalized assistance. Contact Pankaj Kamble at <a href="tel:8454819180">8454819180</a> or email us at <a href="mailto:sankalpservices2025@gmail.com">sankalpservices2025@gmail.com</a></p>
+        </div>
+    `;
+    
+    searchResults.innerHTML = resultsHTML;
+}
+
+// Document browser functionality
+function showChapter(chapterName) {
+    const documentContent = document.getElementById('document-content');
+    
+    const chapters = {
+        'registration': {
+            title: 'Chapter II - Registration of Societies',
+            content: `
+                <h4>Key Provisions:</h4>
+                <p><span class="section-number">Section 6:</span> Minimum 10 adult persons required for registration</p>
+                <p><span class="section-number">Section 8:</span> Application must include proposed bylaws, list of members, and registration fee</p>
+                <p><span class="section-number">Section 9:</span> Registrar has 4 months to approve or reject with reasons</p>
+                <p><span class="section-number">Section 13:</span> Bylaws can be amended with 2/3rd majority and Registrar approval</p>
+                <p><span class="section-number">Section 21:</span> Registration can be cancelled for violations or non-compliance</p>
+            `
+        },
+        'members': {
+            title: 'Chapter III - Members Rights and Liabilities',
+            content: `
+                <h4>Key Provisions:</h4>
+                <p><span class="section-number">Section 22:</span> Any adult person can become member unless disqualified</p>
+                <p><span class="section-number">Section 26:</span> Members have right to inspect books, attend meetings, vote</p>
+                <p><span class="section-number">Section 27:</span> Voting rights based on shareholding with maximum limit</p>
+                <p><span class="section-number">Section 28:</span> Member cannot hold more than 20% shares or Rs. 1000 worth</p>
+                <p><span class="section-number">Section 35:</span> Members can be expelled for misconduct with proper procedure</p>
+            `
+        },
+        'management': {
+            title: 'Chapter VII - Management of Societies',
+            content: `
+                <h4>Key Provisions:</h4>
+                <p><span class="section-number">Section 72:</span> General body is the final authority of society</p>
+                <p><span class="section-number">Section 73:</span> Committee manages day-to-day affairs, elected for 5 years</p>
+                <p><span class="section-number">Section 75:</span> AGM must be held within 6 months of year end</p>
+                <p><span class="section-number">Section 78:</span> Registrar can suspend committee for misconduct</p>
+                <p><span class="section-number">Section 79:</span> Societies must file annual returns and statements</p>
+            `
+        },
+        'audit': {
+            title: 'Chapter VIII - Audit, Inquiry, Inspection and Supervision',
+            content: `
+                <h4>Key Provisions:</h4>
+                <p><span class="section-number">Section 81:</span> Annual audit mandatory by qualified auditors</p>
+                <p><span class="section-number">Section 82:</span> Defects in accounts must be rectified within specified time</p>
+                <p><span class="section-number">Section 83:</span> Registrar can conduct inquiry into society affairs</p>
+                <p><span class="section-number">Section 88:</span> Damages can be assessed against delinquent promoters</p>
+                <p><span class="section-number">Section 89A:</span> Registrar has power to inspect society working</p>
+            `
+        },
+        'disputes': {
+            title: 'Chapter IX - Settlement of Disputes',
+            content: `
+                <h4>Key Provisions:</h4>
+                <p><span class="section-number">Section 91:</span> Disputes must be referred to Cooperative Courts</p>
+                <p><span class="section-number">Section 92:</span> Limitation period of 2 years for dispute reference</p>
+                <p><span class="section-number">Section 94:</span> Cooperative Courts have powers of civil courts</p>
+                <p><span class="section-number">Section 96:</span> Awards are final and binding on parties</p>
+                <p><span class="section-number">Section 98:</span> Recovery as per land revenue procedures</p>
+            `
+        },
+        'housing': {
+            title: 'Chapter XIII-B - Cooperative Housing Societies',
+            content: `
+                <h4>Key Provisions:</h4>
+                <p><span class="section-number">Section 154B-12:</span> Share transfer requires 2/3rd committee consent</p>
+                <p><span class="section-number">Section 154B-19:</span> Committee of 7-15 members, 5-year term</p>
+                <p><span class="section-number">Section 154B-21:</span> 33% seats reserved for women</p>
+                <p><span class="section-number">Section 154B-26:</span> Allotment through draw of lots mandatory</p>
+                <p><span class="section-number">Section 154B-29:</span> Dues recoverable as land revenue</p>
+            `
+        }
+    };
+    
+    if (chapters[chapterName]) {
+        documentContent.innerHTML = `
+            <h4>${chapters[chapterName].title}</h4>
+            ${chapters[chapterName].content}
+            <p style="margin-top: 2rem; font-style: italic; color: var(--text-light);">
+                For detailed interpretation and specific cases, consult with SMACS legal experts.
+            </p>
+        `;
+    }
+}
+
+function showBylaw(bylawName) {
+    const documentContent = document.getElementById('document-content');
+    
+    const bylaws = {
+        'membership': {
+            title: 'Model Bylaw - Membership Rules',
+            content: `
+                <h4>Membership Provisions:</h4>
+                <p><span class="section-number">Bylaw 7:</span> Application for membership in prescribed form</p>
+                <p><span class="section-number">Bylaw 12:</span> Membership fee and share money requirements</p>
+                <p><span class="section-number">Bylaw 15:</span> Rights and duties of members</p>
+                <p><span class="section-number">Bylaw 18:</span> Termination of membership procedures</p>
+                <p><span class="section-number">Bylaw 25:</span> Liability of members for society debts</p>
+            `
+        },
+        'committee': {
+            title: 'Model Bylaw - Committee Formation',
+            content: `
+                <h4>Committee Management:</h4>
+                <p><span class="section-number">Bylaw 45:</span> Committee composition and election process</p>
+                <p><span class="section-number">Bylaw 47:</span> Powers and functions of committee</p>
+                <p><span class="section-number">Bylaw 52:</span> Committee meetings and quorum</p>
+                <p><span class="section-number">Bylaw 58:</span> Sub-committees and delegation of powers</p>
+                <p><span class="section-number">Bylaw 62:</span> Committee member disqualifications</p>
+            `
+        },
+        'meetings': {
+            title: 'Model Bylaw - Meetings and Procedures',
+            content: `
+                <h4>Meeting Procedures:</h4>
+                <p><span class="section-number">Bylaw 70:</span> Annual General Meeting procedures</p>
+                <p><span class="section-number">Bylaw 75:</span> Special General Meeting convening</p>
+                <p><span class="section-number">Bylaw 78:</span> Notice requirements for meetings</p>
+                <p><span class="section-number">Bylaw 82:</span> Voting procedures and proxy voting</p>
+                <p><span class="section-number">Bylaw 85:</span> Meeting minutes and records</p>
+            `
+        },
+        'financial': {
+            title: 'Model Bylaw - Financial Management',
+            content: `
+                <h4>Financial Provisions:</h4>
+                <p><span class="section-number">Bylaw 95:</span> Collection of funds and charges</p>
+                <p><span class="section-number">Bylaw 102:</span> Investment of surplus funds</p>
+                <p><span class="section-number">Bylaw 108:</span> Audit and accounts maintenance</p>
+                <p><span class="section-number">Bylaw 115:</span> Reserve fund management</p>
+                <p><span class="section-number">Bylaw 120:</span> Budget preparation and approval</p>
+            `
+        },
+        'transfer': {
+            title: 'Model Bylaw - Property Transfer',
+            content: `
+                <h4>Transfer Procedures:</h4>
+                <p><span class="section-number">Bylaw 125:</span> Share and interest transfer process</p>
+                <p><span class="section-number">Bylaw 130:</span> No Objection Certificate procedures</p>
+                <p><span class="section-number">Bylaw 135:</span> Transfer fees and documentation</p>
+                <p><span class="section-number">Bylaw 140:</span> Society consent requirements</p>
+                <p><span class="section-number">Bylaw 145:</span> Registration with sub-registrar</p>
+            `
+        },
+        'misc': {
+            title: 'Model Bylaw - Miscellaneous Provisions',
+            content: `
+                <h4>Other Important Provisions:</h4>
+                <p><span class="section-number">Bylaw 150:</span> Maintenance and repairs responsibility</p>
+                <p><span class="section-number">Bylaw 155:</span> Use of common areas</p>
+                <p><span class="section-number">Bylaw 160:</span> Dispute resolution procedures</p>
+                <p><span class="section-number">Bylaw 165:</span> Amendment of bylaws process</p>
+                <p><span class="section-number">Bylaw 170:</span> Dissolution procedures</p>
+            `
+        }
+    };
+    
+    if (bylaws[bylawName]) {
+        documentContent.innerHTML = `
+            <h4>${bylaws[bylawName].title}</h4>
+            ${bylaws[bylawName].content}
+            <p style="margin-top: 2rem; font-style: italic; color: var(--text-light);">
+                These are model bylaws. Actual bylaws may vary for each society. SMACS can help draft customized bylaws.
+            </p>
+        `;
+    }
+}
+
+// FAQ toggle functionality
+function toggleFAQ(element) {
+    const faqItem = element.parentElement;
+    faqItem.classList.toggle('active');
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Legal search functionality
+    const legalSearchBtn = document.getElementById('legal-search-btn');
+    const legalSearchInput = document.getElementById('legal-search-input');
+    
+    if (legalSearchBtn) {
+        legalSearchBtn.addEventListener('click', () => searchLegal());
+    }
+    
+    if (legalSearchInput) {
+        legalSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchLegal();
+            }
+        });
+    }
+});
