@@ -489,7 +489,7 @@ function initializeChatbot() {
     
     console.log('Chatbot initialized successfully');
 }
-// Legal Consultation Functionality
+// Fixed Legal Consultation Functionality
 const legalKnowledgeBase = {
     // MCS Act Sections
     'quorum': {
@@ -530,8 +530,10 @@ const legalKnowledgeBase = {
     }
 };
 
-// Tab switching functionality
-function switchTab(tabName) {
+// Fixed Tab switching functionality
+window.switchTab = function(tabName) {
+    console.log('Switching to tab:', tabName);
+    
     // Remove active class from all tabs and buttons
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
@@ -541,14 +543,28 @@ function switchTab(tabName) {
     });
     
     // Add active class to selected tab and button
-    document.getElementById(tabName + '-tab').classList.add('active');
-    event.target.classList.add('active');
-}
+    const targetTab = document.getElementById(tabName + '-tab');
+    const clickedButton = event ? event.target : document.querySelector(`[onclick="switchTab('${tabName}')"]`);
+    
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
+    if (clickedButton) {
+        clickedButton.classList.add('active');
+    }
+};
 
-// Legal search functionality
-function searchLegal(query) {
+// Fixed Legal search functionality
+window.searchLegal = function(query) {
+    console.log('Search function called with query:', query);
+    
     const searchInput = document.getElementById('legal-search-input');
     const searchResults = document.getElementById('search-results');
+    
+    if (!searchInput || !searchResults) {
+        console.error('Search elements not found');
+        return;
+    }
     
     if (query) {
         searchInput.value = query;
@@ -556,7 +572,12 @@ function searchLegal(query) {
         query = searchInput.value.trim();
     }
     
-    if (!query) return;
+    if (!query) {
+        alert('Please enter a search query');
+        return;
+    }
+    
+    console.log('Performing search for:', query);
     
     // Show loading
     searchResults.innerHTML = `
@@ -571,7 +592,7 @@ function searchLegal(query) {
         const results = performLegalSearch(query);
         displaySearchResults(results);
     }, 1500);
-}
+};
 
 function performLegalSearch(query) {
     const queryLower = query.toLowerCase();
@@ -583,6 +604,28 @@ function performLegalSearch(query) {
             value.title.toLowerCase().includes(queryLower) || 
             value.content.toLowerCase().includes(queryLower)) {
             results.push(value);
+        }
+    }
+    
+    // Additional keyword matching
+    const keywords = {
+        'meeting': ['quorum', 'election'],
+        'member': ['membership transfer', 'committee removal'],
+        'vote': ['quorum', 'election'],
+        'money': ['reserve fund', 'audit'],
+        'fund': ['reserve fund', 'audit'],
+        'remove': ['committee removal'],
+        'elect': ['election'],
+        'transfer': ['membership transfer']
+    };
+    
+    for (const [keyword, relatedTopics] of Object.entries(keywords)) {
+        if (queryLower.includes(keyword)) {
+            relatedTopics.forEach(topic => {
+                if (legalKnowledgeBase[topic] && !results.some(r => r.title === legalKnowledgeBase[topic].title)) {
+                    results.push(legalKnowledgeBase[topic]);
+                }
+            });
         }
     }
     
@@ -601,6 +644,11 @@ function performLegalSearch(query) {
 
 function displaySearchResults(results) {
     const searchResults = document.getElementById('search-results');
+    
+    if (!searchResults) {
+        console.error('Search results container not found');
+        return;
+    }
     
     if (results.length === 0) {
         searchResults.innerHTML = `
@@ -635,9 +683,15 @@ function displaySearchResults(results) {
     searchResults.innerHTML = resultsHTML;
 }
 
-// Document browser functionality
-function showChapter(chapterName) {
+// Fixed Document browser functionality
+window.showChapter = function(chapterName) {
+    console.log('Showing chapter:', chapterName);
+    
     const documentContent = document.getElementById('document-content');
+    if (!documentContent) {
+        console.error('Document content container not found');
+        return;
+    }
     
     const chapters = {
         'registration': {
@@ -717,10 +771,16 @@ function showChapter(chapterName) {
             </p>
         `;
     }
-}
+};
 
-function showBylaw(bylawName) {
+window.showBylaw = function(bylawName) {
+    console.log('Showing bylaw:', bylawName);
+    
     const documentContent = document.getElementById('document-content');
+    if (!documentContent) {
+        console.error('Document content container not found');
+        return;
+    }
     
     const bylaws = {
         'membership': {
@@ -800,29 +860,58 @@ function showBylaw(bylawName) {
             </p>
         `;
     }
-}
+};
 
-// FAQ toggle functionality
-function toggleFAQ(element) {
+// Fixed FAQ toggle functionality
+window.toggleFAQ = function(element) {
+    console.log('Toggling FAQ');
     const faqItem = element.parentElement;
     faqItem.classList.toggle('active');
-}
+};
 
-// Event listeners
+// Enhanced Event listeners for consultation section
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing consultation section...');
+    
     // Legal search functionality
     const legalSearchBtn = document.getElementById('legal-search-btn');
     const legalSearchInput = document.getElementById('legal-search-input');
     
     if (legalSearchBtn) {
-        legalSearchBtn.addEventListener('click', () => searchLegal());
+        legalSearchBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Search button clicked');
+            searchLegal();
+        });
+        console.log('Search button event listener added');
+    } else {
+        console.error('Legal search button not found');
     }
     
     if (legalSearchInput) {
-        legalSearchInput.addEventListener('keypress', (e) => {
+        legalSearchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
+                e.preventDefault();
+                console.log('Enter key pressed in search input');
                 searchLegal();
             }
         });
+        console.log('Search input event listener added');
+    } else {
+        console.error('Legal search input not found');
     }
+    
+    // Tab button event listeners
+    const tabButtons = document.querySelectorAll('.tab-button');
+    tabButtons.forEach((button, index) => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const tabName = this.textContent.includes('Search') ? 'search' : 
+                           this.textContent.includes('Browse') ? 'browse' : 'faq';
+            console.log('Tab button clicked:', tabName);
+            switchTab(tabName);
+        });
+    });
+    
+    console.log('Consultation section initialized successfully');
 });
