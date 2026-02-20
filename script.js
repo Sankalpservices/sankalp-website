@@ -205,7 +205,7 @@ function initializeChatbot() {
     // Chatbot responses for society management
     const botResponses = {
         'services': {
-            message: "SMACS offers comprehensive society management services:",
+            message: "HAMS offers comprehensive society management services:",
             quickActions: [
                 { text: "Accounting Services", action: "accounting" },
                 { text: "Compliance Management", action: "compliance" },
@@ -249,7 +249,7 @@ function initializeChatbot() {
             ]
         },
         'contact': {
-            message: "Ready to get started? Contact our experts:\n\n📞 Pankaj Kamble: 8454819180\n📞 Sudhir Dingankar: 8879782239\n✉️ sankalpservices2025@gmail.com\n\nOffice: Hill Crest CHS Ltd, Manpada, Thane West - 400607",
+            message: "Ready to get started? Contact our experts:\n\n📞 Pankaj Kamble: 8454819180\n📞 Sudhir Dingankar: 8879782239\n✉️ housenexs@gmail.com\n\nOffice: Hill Crest CHS Ltd, Manpada, Thane West - 400607",
             quickActions: [
                 { text: "Call Now", action: "call" },
                 { text: "Send Email", action: "email" },
@@ -276,8 +276,8 @@ function initializeChatbot() {
     const commonResponses = [
         "I'd be happy to help you with that! For specific information about society management, please contact our experts at 8454819180.",
         "Thanks for your question! Our team specializes in society management. You can reach Pankaj at 8454819180 for detailed assistance.",
-        "That's a great question! For personalized solutions, please call us at 8454819180 or email sankalpservices2025@gmail.com.",
-        "I understand your query. Our experienced team at SMACS can provide the best solution. Contact us at 8454819180."
+        "That's a great question! For personalized solutions, please call us at 8454819180 or email housenexs@gmail.com.",
+        "I understand your query. Our experienced team at HAMS can provide the best solution. Contact us at 8454819180."
     ];
 
     let chatbotOpen = false;
@@ -339,7 +339,7 @@ function initializeChatbot() {
             window.open('tel:8454819180', '_self');
             return;
         } else if (action === 'email') {
-            window.open('mailto:sankalpservices2025@gmail.com', '_self');
+            window.open('mailto:housenexs@gmail.com', '_self');
             return;
         } else if (action === 'location') {
             const mapElement = document.getElementById('map');
@@ -633,7 +633,7 @@ function performLegalSearch(query) {
     if (results.length === 0) {
         results.push({
             title: 'General Legal Guidance Required',
-            source: 'SMACS Legal Consultation',
+            source: 'HAMS Legal Consultation',
             content: `Your query "${query}" requires specific legal analysis. Our experts can provide detailed guidance on this matter. Common areas we help with include committee matters, member disputes, compliance issues, audit requirements, and society governance.`,
             section: 'Expert Consultation Recommended'
         });
@@ -676,7 +676,7 @@ function displaySearchResults(results) {
     resultsHTML += `
         <div class="search-result-item" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-left-color: #2196f3;">
             <h4>Need More Detailed Guidance?</h4>
-            <p>For complex legal matters or specific consultation, our experienced team at SMACS can provide personalized assistance. Contact Pankaj Kamble at <a href="tel:8454819180">8454819180</a> or email us at <a href="mailto:sankalpservices2025@gmail.com">sankalpservices2025@gmail.com</a></p>
+            <p>For complex legal matters or specific consultation, our experienced team at HAMS can provide personalized assistance. Contact Pankaj Kamble at <a href="tel:8454819180">8454819180</a> or email us at <a href="mailto:housenexs@gmail.com">housenexs@gmail.com</a></p>
         </div>
     `;
     
@@ -767,7 +767,7 @@ window.showChapter = function(chapterName) {
             <h4>${chapters[chapterName].title}</h4>
             ${chapters[chapterName].content}
             <p style="margin-top: 2rem; font-style: italic; color: var(--text-light);">
-                For detailed interpretation and specific cases, consult with SMACS legal experts.
+                For detailed interpretation and specific cases, consult with HAMS legal experts.
             </p>
         `;
     }
@@ -856,7 +856,7 @@ window.showBylaw = function(bylawName) {
             <h4>${bylaws[bylawName].title}</h4>
             ${bylaws[bylawName].content}
             <p style="margin-top: 2rem; font-style: italic; color: var(--text-light);">
-                These are model bylaws. Actual bylaws may vary for each society. SMACS can help draft customized bylaws.
+                These are model bylaws. Actual bylaws may vary for each society. HAMS can help draft customized bylaws.
             </p>
         `;
     }
